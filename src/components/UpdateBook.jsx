@@ -17,7 +17,7 @@ const UpdateBook = ({ id, handleClose }) => {
         //i've left the debugger for you to test it out. hover over data to see thea actual value of it
         if (response.ok) {
             const data = await response.json(); 
-            debugger
+           
             if (data != null && data.id!=null) {
               const bookName = data.bookName;
               const author = data.author;
@@ -81,7 +81,7 @@ const UpdateBook = ({ id, handleClose }) => {
       value={author}
       onChange={(e) => setAuthor(e.target.value)}
     />
-    <button onClick={handleUpdate}>Update</button>
+    <button onClick={() => handleUpdate(id)}>Update</button>
     <button onClick={handleClose}>Cancel</button>
 </div>);
 };
