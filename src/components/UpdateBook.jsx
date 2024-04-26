@@ -14,10 +14,13 @@ const UpdateBook = ({ id, handleClose }) => {
             method: "GET",
           }
         );
+        //i've left the debugger for you to test it out. hover over data to see thea actual value of it
         if (response.ok) {
             const data = await response.json(); 
-            if (data && data.length > 0) {
-              const { bookName, author } = data[0];
+            debugger
+            if (data != null && data.id!=null) {
+              const bookName = data.bookName;
+              const author = data.author;
               console.log("Fetched book details:", { bookName });
               setBookName(bookName);
               setAuthor(author);
@@ -35,13 +38,15 @@ const UpdateBook = ({ id, handleClose }) => {
         fetchBook();
       }
   }, [id]);
-
+  // ID is not getting passed here. instead of this you can pass nothing and use the same method you used for author and bookname
   const handleUpdate = async (id) => {
+    debugger
     const updatedBookData = {
         id: id,
         bookName: bookName,
         author: author
       };
+      console.log("updatedBookData",updatedBookData)
     try {
     await fetch(
         `http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/${id}`,
