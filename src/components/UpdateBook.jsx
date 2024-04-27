@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../index.css"
 
 const UpdateBook = ({ id, handleClose }) => {
   const [bookName, setBookName] = useState("");
@@ -67,7 +68,7 @@ const UpdateBook = ({ id, handleClose }) => {
   };
 
   return (
-  <div>
+  <div className="popup-update">
     <h2>Update Book</h2>
     <label>Book Name:</label>
     <input
