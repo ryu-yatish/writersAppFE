@@ -21,7 +21,7 @@ const Home = () => {
   const fetchBooks = async () => {
     try {
       const response = await fetch(
-        "http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/all",
+        "http://localhost:8080/Book/all",
         {
           method: "GET",
         }
@@ -93,7 +93,15 @@ const Home = () => {
               <td>{book.bookName}</td>
               <td>{book.author}</td>
               <td>{book.chapterCount}</td>
-              <td>{book.chapters}</td>
+              <td>
+                <ul>
+                  {book.chapters.map((chapter, index) => (
+                    <li key={index}>
+                      {`Chapter ${index+1}: ${chapter}`}
+                    </li>
+                  ))}
+                </ul>
+              </td>
               <td>
                 <IconButton onClick={() => handleDeletePopup(book.id)} aria-label="delete" color="error" size="large">
                   <DeleteIcon />

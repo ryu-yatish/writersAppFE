@@ -10,7 +10,7 @@ const UpdateBook = ({ id, handleClose }) => {
     const fetchBook = async () => {
       try {
         const response = await fetch(
-          `http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/getById/${id}`,
+          `http://localhost:8080/Book/getById/${id}`,
           {
             method: "GET",
           }
@@ -50,7 +50,7 @@ const UpdateBook = ({ id, handleClose }) => {
       console.log("updatedBookData",updatedBookData)
     try {
     await fetch(
-        `http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/${id}`,
+        `http://localhost:8080/Book/${id}`,
         {
           method: "PUT",
           headers: {

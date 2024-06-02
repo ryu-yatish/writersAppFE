@@ -5,7 +5,7 @@ const DeleteBook = ({ id, books, closePopup, setBooks }) => {
     const handleDelete = async (id) => {
         try {
           const response = await fetch(
-            `http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/${id}`,
+            `http://localhost:8080/Book/${id}`,
             {
               method: "DELETE",
             }
