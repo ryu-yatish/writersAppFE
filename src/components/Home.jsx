@@ -77,31 +77,20 @@ const Home = () => {
       <table>
         <thead>
           <tr>
-            <th>id</th>
             <th>Book Title</th>
             <th>Author</th>
             <th>Chapter Count</th>
-            <th>Chapters</th>
             <th>DELETE</th>
             <th>UPDATE</th>
           </tr>
         </thead>
         <tbody>
-          {books.map((book) => (
+          {books?.map((book) => (
             <tr key={book.id}>
-              <td>{book.id}</td>
               <td>{book.bookName}</td>
               <td>{book.author}</td>
               <td>{book.chapterCount}</td>
-              <td>
-                <ul>
-                  {book.chapters.map((chapter, index) => (
-                    <li key={index}>
-                      {`Chapter ${index+1}: ${chapter}`}
-                    </li>
-                  ))}
-                </ul>
-              </td>
+              
               <td>
                 <IconButton onClick={() => handleDeletePopup(book.id)} aria-label="delete" color="error" size="large">
                   <DeleteIcon />

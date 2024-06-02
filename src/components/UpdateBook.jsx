@@ -39,9 +39,7 @@ const UpdateBook = ({ id, handleClose }) => {
         fetchBook();
       }
   }, [id]);
-  // ID is not getting passed here. instead of this you can pass nothing and use the same method you used for author and bookname
   const handleUpdate = async (id) => {
-    debugger
     const updatedBookData = {
         id: id,
         bookName: bookName,
