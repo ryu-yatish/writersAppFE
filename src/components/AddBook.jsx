@@ -18,7 +18,7 @@ const AddBook = ({ onAdd, onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/add", {
+      const response = await fetch("http://localhost:8080/Book/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

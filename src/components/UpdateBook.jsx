@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../index.css"
 
 const UpdateBook = ({ id, handleClose }) => {
   const [bookName, setBookName] = useState("");
@@ -9,15 +10,18 @@ const UpdateBook = ({ id, handleClose }) => {
     const fetchBook = async () => {
       try {
         const response = await fetch(
-          `http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/getById/${id}`,
+          `http://localhost:8080/Book/getById/${id}`,
           {
             method: "GET",
           }
         );
+        //i've left the debugger for you to test it out. hover over data to see thea actual value of it
         if (response.ok) {
             const data = await response.json(); 
-            if (data && data.length > 0) {
-              const { bookName, author } = data[0];
+           
+            if (data != null && data.id!=null) {
+              const bookName = data.bookName;
+              const author = data.author;
               console.log("Fetched book details:", { bookName });
               setBookName(bookName);
               setAuthor(author);
@@ -35,16 +39,18 @@ const UpdateBook = ({ id, handleClose }) => {
         fetchBook();
       }
   }, [id]);
-
+  // ID is not getting passed here. instead of this you can pass nothing and use the same method you used for author and bookname
   const handleUpdate = async (id) => {
+    debugger
     const updatedBookData = {
         id: id,
         bookName: bookName,
         author: author
       };
+      console.log("updatedBookData",updatedBookData)
     try {
     await fetch(
-        `http://ec2-54-234-159-247.compute-1.amazonaws.com:8080/Book/${id}`,
+        `http://localhost:8080/Book/${id}`,
         {
           method: "PUT",
           headers: {
@@ -62,7 +68,7 @@ const UpdateBook = ({ id, handleClose }) => {
   };
 
   return (
-  <div>
+  <div className="popup-update">
     <h2>Update Book</h2>
     <label>Book Name:</label>
     <input
@@ -76,7 +82,7 @@ const UpdateBook = ({ id, handleClose }) => {
       value={author}
       onChange={(e) => setAuthor(e.target.value)}
     />
-    <button onClick={handleUpdate}>Update</button>
+    <button onClick={() => handleUpdate(id)}>Update</button>
     <button onClick={handleClose}>Cancel</button>
 </div>);
 };
