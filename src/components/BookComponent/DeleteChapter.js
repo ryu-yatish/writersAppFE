@@ -1,13 +1,17 @@
 import React from 'react';
-import { deleteBookById } from './services/bookService';
-import '../App.css';
+import { deleteChapterById } from '../services/chapterService';
+import '../../App.css';
 
-const DeleteBook = ({ id, books, closePopup, setBooks }) => {
+const DeleteChapter = ({ id,book, closePopup, setBook }) => {
   const handleDelete = async (id) => {
     try {
-      const response = await deleteBookById(id);
+      const response = await deleteChapterById(id);
       if (response.ok) {
-        setBooks(books.filter((book) => book.id !== id));
+        setBook((book) => ({
+          ...book,
+          chapters: book.chapters.filter((chapter) => chapter.id !== id),
+          chapterCount: book.chapterCount - 1,
+        }));
       } else {
         console.error(`Failed to delete book with id ${id}`);
       }
@@ -19,10 +23,10 @@ const DeleteBook = ({ id, books, closePopup, setBooks }) => {
   };
 
   return (
-    <div className="popup">
+<div className="popup">
       <div className="popup-inner">
         <h2>CONFIRM DELETE</h2>
-        <h3>Are you sure you want to delete this book?</h3>
+        <h3>Are you sure you want to delete this chapter?</h3>
         <h5>Entry will be permanently deleted.</h5>
         <div className="button-group">
           <button className="delete-btn" onClick={() => handleDelete(id)}>Delete</button>
@@ -33,4 +37,4 @@ const DeleteBook = ({ id, books, closePopup, setBooks }) => {
   );
 };
 
-export default DeleteBook;
+export default DeleteChapter;

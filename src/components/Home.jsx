@@ -3,42 +3,38 @@ import AddBook from "./AddBook";
 import UpdateBook from "./UpdateBook";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import "../index.css";
+import "../App.css"
 import DeleteBook from "./DeleteBook";
-
+import { fetchBooks } from "./services/bookService";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [showAddBookPopup, setShowAddBookPopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [selectedBookId, setSelectedBookId] = useState(null);
+  
   const [deleteID, setDeleteID] = useState(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchBooks();
+    handleFetchBooks();
   }, []);
 
-  const fetchBooks = async () => {
+  const handleFetchBooks = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8080/Book/all",
-        {
-          method: "GET",
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setBooks(data);
-      } else {
-        console.error("Failed to fetch books");
-      }
+      const books = await fetchBooks();
+      setBooks(books)
+      console.log("Books fetched successfully:", books);
+
     } catch (error) {
-      console.error("Error fetching books:", error);
+      console.error("Error occurred while fetching books:", error);
+
     }
   };
 
   const handleAddBook = (newBook) => {
-    setBooks([...books, newBook]);
+    handleFetchBooks()
     setShowAddBookPopup(false);
   };
 
@@ -64,54 +60,57 @@ const Home = () => {
 
   return (
     <>
-      <div>
-        <h1>List of books:</h1>
-      </div>
-      <button onClick={() => setShowAddBookPopup(true)}>Add Book</button>
-      {showAddBookPopup && (
-        <AddBook
-          onAdd={handleAddBook}
-          onClose={() => setShowAddBookPopup(false)}
-        />
-      )}
-      <table>
-        <thead>
-          <tr>
-            <th>Book Title</th>
-            <th>Author</th>
-            <th>Chapter Count</th>
-            <th>DELETE</th>
-            <th>UPDATE</th>
+    <div className="header">
+      <h1>List of Books</h1>
+      <button className="add-book-btn" onClick={() => setShowAddBookPopup(true)}>Add Book</button>
+    </div>
+    
+    <table className="book-table">
+      <thead>
+        <tr>
+          <th>Book Title</th>
+          <th>Author</th>
+          <th>Chapter Count</th>
+          <th>DELETE</th>
+          <th>UPDATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {books?.map((book) => (
+          <tr key={book.id} onClick={(e) => {
+            if (!e.target.closest('.ignore-click')) {
+              navigate(`/book/${book.id}`);
+            }
+          }}>
+            <td>{book.bookName}</td>
+            <td>{book.author}</td>
+            <td>{book.chapterCount}</td>
+            <td>
+              <IconButton className="ignore-click" onClick={() => handleDeletePopup(book.id)} aria-label="delete" color="error" size="large">
+                <DeleteIcon />
+              </IconButton>
+            </td>
+            <td>
+              <button  className="update-btn  ignore-click" onClick={() => handleUpdatePopup(book.id)}>
+                Update
+              </button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {books?.map((book) => (
-            <tr key={book.id}>
-              <td>{book.bookName}</td>
-              <td>{book.author}</td>
-              <td>{book.chapterCount}</td>
-              
-              <td>
-                <IconButton onClick={() => handleDeletePopup(book.id)} aria-label="delete" color="error" size="large">
-                  <DeleteIcon />
-                </IconButton>
-                
-              </td>
-              <td>
-                <button onClick={() => handleUpdatePopup(book.id)}>
-                  Update entry
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {showUpdatePopup && (
-        <UpdateBook id={selectedBookId} handleClose={closeUpdatePopup} />
-      )}
-      {showDeletePopup && 
-      (<DeleteBook id={deleteID} books={books} setBooks={setBooks} closePopup={closeDeletePopup}/>)}
-    </>
+        ))}
+      </tbody>
+    </table>
+    {showAddBookPopup && (
+      <AddBook
+        onAdd={handleAddBook}
+        onClose={() => setShowAddBookPopup(false)}
+      />
+    )}
+    {showUpdatePopup && (
+      <UpdateBook id={selectedBookId} handleClose={closeUpdatePopup} />
+    )}
+    {showDeletePopup && 
+    (<DeleteBook id={deleteID} books={books} setBooks={setBooks} closePopup={closeDeletePopup}/>)}
+  </>
   );
 };
 

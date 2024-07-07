@@ -1,0 +1,57 @@
+.write-book-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .write-book-heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+.editor-wrapper {
+  border: none; /* Remove the border */
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow:3px 2px 13px 2px var(--background-color-shadow); /* Add some shadow for better visibility */
+}
+  
+  .save-button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.2);
+  }
+  
+  .save-button:hover {
+    background-color: #0056b3;
+  }
+  
+
+  .write-book-title-input{
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  
+  .save-button {
+    margin-right: 10px;
+  }
+  

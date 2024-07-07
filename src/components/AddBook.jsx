@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import '../index.css'
 
 const AddBook = ({ onAdd, onClose }) => {
   const [formData, setFormData] = useState({
@@ -43,31 +42,40 @@ const AddBook = ({ onAdd, onClose }) => {
   };
 
   return (
-    <>
-      <div className="popup">
-      <div className="popup-inner">
-        <button className="close-btn" onClick={() => onClose()}>
-          X
-        </button>
-        <h2>Add New Book</h2>
+    <div className="popup">
+    <div className="popup-inner">
+      <button className="close-btn" onClick={() => onClose()}>
+        &times;
+      </button>
+      <h2>Add New Book</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Book Name:
-          <input type="text" name="bookName" required value={formData.bookName} onChange={handleInputChange}/>
-        </label>
-        <label>
-          Author:
-          <input type="text" name="author" required value={formData.author} onChange={handleInputChange}/>
-        </label>
-        <label>
-          Chapter Count:
-          <input type="text" name="chapterCount" required value={formData.chapterCount} onChange={handleInputChange}/>
-        </label>
-        <button type="submit">Submit</button>
+        <div className="form-group">
+          <label>Book Name:</label>
+          <input 
+            type="text" 
+            name="bookName" 
+            required 
+            value={formData.bookName} 
+            onChange={handleInputChange} 
+          />
+        </div>
+        <div className="form-group">
+          <label>Author:</label>
+          <input 
+            type="text" 
+            name="author" 
+            required 
+            value={formData.author} 
+            onChange={handleInputChange} 
+          />
+        </div>
+        <div className="button-group">
+          <button type="submit" className="submit-btn">Submit</button>
+          <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
+        </div>
       </form>
-      </div>
-      </div>
-    </>
+    </div>
+  </div>
   );
 };
 
