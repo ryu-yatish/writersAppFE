@@ -118,14 +118,14 @@ const BookDetail = () => {
     <IconButton className="chatbox-toggle" onClick={() => setShowAddSchemaPopup(true)}>
         <AddIcon fontSize="large" />
       </IconButton>
-      {book.dynamicDbSchemaList.map((dbSchema, index) => {
+      {/* {book.dynamicDbSchemaList.map((dbSchema, index) => {
         const image =dbSchema.icon;
         return (
             <div>
               <img src={`data:image/svg+xml;utf8,${encodeURIComponent(image)}`} />
             </div>
         )
-      })}
+      })} */}
     </div>
     </div>
   );
