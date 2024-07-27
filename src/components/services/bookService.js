@@ -1,9 +1,9 @@
-// bookService.js
-const API_BASE_URL = "http://localhost:8080/Book";
+const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "http://localhost:8080";
+const API_BASE_URL_BODY = API_BASE_URL+"/Book"
 
 export const fetchBookById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/getById/${id}`, {
+    const response = await fetch(`${API_BASE_URL_BODY}/getById/${id}`, {
       method: "GET",
     });
     if (response.ok) {
@@ -19,7 +19,7 @@ export const fetchBookById = async (id) => {
 
 export const fetchBooks = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/all`, {
+    const response = await fetch(`${API_BASE_URL_BODY}/all`, {
       method: "GET",
     });
     if (response.ok) {
@@ -35,7 +35,7 @@ export const fetchBooks = async () => {
 
 export const deleteBookById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
+    const response = await fetch(`${API_BASE_URL_BODY}/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {
@@ -50,7 +50,7 @@ export const deleteBookById = async (id) => {
 
 export const updateBook = async (id, updatedBookData) => {
   try {
-    await fetch(`${API_BASE_URL}/${id}`, {
+    await fetch(`${API_BASE_URL_BODY}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -63,3 +63,17 @@ export const updateBook = async (id, updatedBookData) => {
     throw error;
   }
 };
+
+export const addBookApi = async (formData) => {
+  try {
+    await fetch(`${API_BASE_URL_BODY}/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });  
+  } catch (error) {
+    console.error("Error updating book:", error);
+    throw error;
+  }
+};
+

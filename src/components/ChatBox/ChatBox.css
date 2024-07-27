@@ -16,10 +16,10 @@ div .chatbox-container {
   div .chatbox {
     width: 300px;
     height: 400px;
-    background-color: white;
+    background-color: var(--background-color);
     border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: -1px 1px 20px 5px var(--background-color-shadow);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -60,7 +60,7 @@ div .chatbox-container {
 
   div .chatbox-input button {
     background-color: #3f51b5;
-    color: white;
+    color: var(--text-color);
     border: none;
     padding: 5px 10px;
     border-radius: 5px;

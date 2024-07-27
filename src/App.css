@@ -153,6 +153,8 @@ body {
   width: 300px;
   position: relative;
   text-align: center;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .close-btn {
@@ -180,4 +182,20 @@ body {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.property-group {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.properties-group .property-group + .property-group {
+  margin-top: 1rem;
+}
+
+
+.horizontal-icons{
+  display: flex;
 }

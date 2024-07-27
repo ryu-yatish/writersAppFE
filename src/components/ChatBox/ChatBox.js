@@ -4,24 +4,25 @@ import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import CircularProgress from '@mui/material/CircularProgress';
-import "./ChatBox.css"; // Create a ChatBox.css for styling
+import "./ChatBox.css"; // Ensure this file exists and has styles
 import { analyzeBook } from "../services/embeddingService";
 import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
 import Tooltip from '@mui/material/Tooltip';
 
-const ChatBox = ({ bookId,tooltipText }) => {
+const ChatBox = ({ bookId, tooltipText }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [responses, setResponses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [tooltipTextNew,setTooltipTextnew]  =useState(tooltipText)
-
+  const [tooltipTextNew, setTooltipTextNew] = useState(tooltipText);
+  const API_BASE_URL = "http://localhost:8080"
   useEffect(() => {
-    setTooltipTextnew(tooltipText);
+    setTooltipTextNew(tooltipText);
   }, [tooltipText]);
 
   const handleToggleChat = () => {
+    console.log(responses);
     setIsOpen(!isOpen);
   };
 
@@ -30,8 +31,8 @@ const ChatBox = ({ bookId,tooltipText }) => {
     try {
       await analyzeBook(bookId);
       const date = new Date();
-      date.toLocaleString();
-      setTooltipTextnew("last analyzed  : \n" +  date)
+      const formattedDate = date.toLocaleString();
+      setTooltipTextNew("Last analyzed: " + formattedDate);
     } catch (error) {
       console.error("Error analyzing book:", error);
     } finally {
@@ -42,17 +43,20 @@ const ChatBox = ({ bookId,tooltipText }) => {
   const handleSendMessage = async () => {
     setIsSending(true);
     try {
-      const response = await fetch(`http://localhost:8080/Embeddings/askGpt/${bookId}`, {
+      const response = await fetch(`${API_BASE_URL}/Embeddings/askGpt/${bookId}`, {
         method: 'POST',
         headers: {
           'Accept': '*/*',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(message),
+        body: JSON.stringify({ message }), // Wrap message in an object
       });
-      console.log(response)
-      const data = await response.text();
-      debugger
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.text(); // Adjust this if your API returns JSON or another format
       setResponses([...responses, { question: message, answer: data }]);
       setMessage("");
     } catch (error) {
@@ -79,12 +83,12 @@ const ChatBox = ({ bookId,tooltipText }) => {
       {isOpen && (
         <div className="chatbox">
           <div className="chatbox-messages">
-            {responses.map((res, index) => (
+            {responses.length > 0 ? responses.map((res, index) => (
               <div key={index} className="chatbox-message">
                 <div className="chatbox-question"><strong>Q:</strong> {res.question}</div>
                 <div className="chatbox-answer"><strong>A:</strong> {res.answer}</div>
               </div>
-            ))}
+            )) : <p>No messages yet.</p>}
           </div>
           <div className="chatbox-input">
             <input

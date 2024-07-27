@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-
+import { addBookApi } from "./services/bookService";
 const AddBook = ({ onAdd, onClose }) => {
   const [formData, setFormData] = useState({
     bookName: "",
@@ -17,17 +17,10 @@ const AddBook = ({ onAdd, onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/Book/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });  
+      const response = await addBookApi(formData)
 
       onAdd(formData);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+
       setFormData({
         bookName: "",
         author:"",

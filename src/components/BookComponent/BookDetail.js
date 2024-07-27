@@ -4,14 +4,18 @@ import "../../App.css";
 import { useNavigate } from "react-router-dom";
 import { fetchBookById } from "../services/bookService";
 import AddChapter from "../AddChapter";
+import AddSchema from "../AddSchema";
 import DeleteChapter from "./DeleteChapter";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from '@mui/icons-material/Add';
+import { Suspense, lazy } from 'react';
 
 const BookDetail = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [showAddChapterPopup, setShowAddChapterPopup] = useState(false);
+  const [showAddSchemaPopup, setShowAddSchemaPopup] = useState(false);
   const [showDeleteChapterPopup, setShowDeleteChapterPopup] = useState(false);
   const [selectedChapterId, setSelectedChapterId] = useState(null);
   const navigate = useNavigate();
@@ -28,13 +32,20 @@ const BookDetail = () => {
     fetchBook();
   }, []);
 
-
+  
 
   const handleAddChapter = (newChapter) => {
     setBook((prevBook) => ({
       ...prevBook,
       chapters: [...prevBook.chapters, newChapter],
       chapterCount: prevBook.chapterCount + 1,
+    }));
+  };
+
+  const handleAddSchema = (newSchema) => {
+    setBook((prevBook) => ({
+      ...prevBook,
+      dynamicDbSchemaList: [...prevBook.dynamicDbSchemaList, newSchema]
     }));
   };
   if (!book) return <div>Loading...</div>;
@@ -88,6 +99,13 @@ const BookDetail = () => {
           onClose={() => setShowAddChapterPopup(false)}
         />
       )}
+      {showAddSchemaPopup && (
+        <AddSchema
+          bookId={id}
+          onAdd={handleAddSchema}
+          onClose={() => setShowAddSchemaPopup(false)}
+        />
+      )}
       {showDeleteChapterPopup && (
         <DeleteChapter
           id={selectedChapterId}
@@ -96,6 +114,19 @@ const BookDetail = () => {
           book={book}
         />
       )}
+      <div className="horizontal-icons">
+    <IconButton className="chatbox-toggle" onClick={() => setShowAddSchemaPopup(true)}>
+        <AddIcon fontSize="large" />
+      </IconButton>
+      {book.dynamicDbSchemaList.map((dbSchema, index) => {
+        const image =dbSchema.icon;
+        return (
+            <div>
+              <img src={`data:image/svg+xml;utf8,${encodeURIComponent(image)}`} />
+            </div>
+        )
+      })}
+    </div>
     </div>
   );
 };

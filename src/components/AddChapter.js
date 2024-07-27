@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { addChapterApi } from "./services/chapterService";
 import "../App.css"
+
 const AddChapter = ({ bookId, onAdd, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -15,15 +17,7 @@ const AddChapter = ({ bookId, onAdd, onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8080/Chapter/add/${bookId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      const response = addChapterApi(bookId,formData)
 
       const newChapter = await response.json();
       onAdd(newChapter);

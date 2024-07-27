@@ -1,8 +1,8 @@
-const API_BASE_URL = "http://localhost:8080/Embeddings";
+const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "http://localhost:8080";
 
 export const analyzeBook = async (bookId) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/analyzeBook/${bookId}`, {
+        const response = await fetch(`${API_BASE_URL}/Embeddings/analyzeBook/${bookId}`, {
             method: 'POST',
             headers: {
               'Accept': '*/*',
