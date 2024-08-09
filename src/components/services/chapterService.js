@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "http://localhost:8080";
+const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "https://localhost:8080";
 const API_BASE_URL_CHAPTER = API_BASE_URL+"/Chapter"
 export const fetchChapterById = async (id) => {
     try {

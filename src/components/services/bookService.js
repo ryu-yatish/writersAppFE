@@ -1,79 +1,65 @@
-const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "http://localhost:8080";
-const API_BASE_URL_BODY = API_BASE_URL+"/Book"
+import axiosInstance from '../axios';
 
+// Fetch a book by ID
 export const fetchBookById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL_BODY}/getById/${id}`, {
-      method: "GET",
-    });
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw new Error("Failed to fetch book");
-    }
+    const response = await axiosInstance.get(`/Book/getById/${id}`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching book:", error);
     throw error;
   }
 };
 
+// Fetch all books
 export const fetchBooks = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL_BODY}/all`, {
-      method: "GET",
-    });
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw new Error("Failed to fetch books");
-    }
+    const response = await axiosInstance.get('/Book/all');
+    return response.data;
   } catch (error) {
     console.error("Error fetching books:", error);
     throw error;
   }
 };
 
+// Delete a book by ID
 export const deleteBookById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL_BODY}/${id}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) {
-        console.error("Error deleting book:");
-    }
-    return response
+    const response = await axiosInstance.delete(`/Book/${id}`);
+    return response;
   } catch (error) {
     console.error("Error deleting book:", error);
     throw error;
   }
 };
 
+// Update a book by ID
 export const updateBook = async (id, updatedBookData) => {
   try {
-    await fetch(`${API_BASE_URL_BODY}/${id}`, {
-      method: "PUT",
+    const response = await axiosInstance.put(`/Book/${id}`, updatedBookData, {
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
       },
-      body: JSON.stringify(updatedBookData),
     });
+    return response;
   } catch (error) {
     console.error("Error updating book:", error);
     throw error;
   }
 };
 
+// Add a new book
 export const addBookApi = async (formData) => {
   try {
-    await fetch(`${API_BASE_URL_BODY}/add`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });  
+    const response = await axiosInstance.post('/Book/add', formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
   } catch (error) {
-    console.error("Error updating book:", error);
+    console.error("Error adding book:", error);
     throw error;
   }
 };
-

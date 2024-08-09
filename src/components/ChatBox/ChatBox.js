@@ -16,7 +16,7 @@ const ChatBox = ({ bookId, tooltipText }) => {
   const [responses, setResponses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tooltipTextNew, setTooltipTextNew] = useState(tooltipText);
-  const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "http://localhost:8080";
+  const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "https://localhost:8080";
   useEffect(() => {
     setTooltipTextNew(tooltipText);
   }, [tooltipText]);
