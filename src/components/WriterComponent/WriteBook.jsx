@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { DarkModeContext } from "../DarkModeContext";
 import JoditEditor from "jodit-react";
-import { fetchChapterById, saveChaptercontent } from "../services/chapterService";
+import { fetchChapterById, saveChapterContent } from "../services/chapterService";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import IconButton from '@mui/material/IconButton';
@@ -23,7 +23,7 @@ const WriteBook = () => {
   const handleSave = async () => {
     try {
       console.log("Save successful:", title, content);
-      await saveChaptercontent(chapterId, { title, content });
+      await saveChapterContent(chapterId, { title, content });
     } catch (error) {
       console.error("Error saving content:", error);
     }
