@@ -1,21 +1,15 @@
-const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "https://localhost:8080";
+import axiosInstance from './axios';
 
 export const analyzeBook = async (bookId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/Embeddings/analyzeBook/${bookId}`, {
-            method: 'POST',
-            headers: {
-              'Accept': '*/*',
-            },
-            body: '',
-        });
-        if (response.ok) {
-        return await response.json();
-        } else {
-        throw new Error("Failed to analyze book ");
-        }
-    } catch (error) {
-        console.error("Error saving book:", error);
-        throw error;
-    }
+  try {
+    const response = await axiosInstance.post(`/Embeddings/analyzeBook/${bookId}`, '', {
+      headers: {
+        'Accept': '*/*',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error analyzing book:", error);
+    throw error;
+  }
 };
