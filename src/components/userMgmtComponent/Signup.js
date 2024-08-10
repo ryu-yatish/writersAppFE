@@ -61,11 +61,10 @@ const Signup = () => {
         window.location.href = '/login';
       })
       .catch(error => {
-        if (error.response && error.response.status === 500) {
-          setConfirmationError('Invalid confirmation code. Please try again.');
-        } else {
-          setConfirmationError('Confirmation error: Please try again later.');
-        }
+        if (error.response) {
+          debugger
+          setConfirmationError(error.response.data);
+        } 
         console.error('Confirmation error:', error);
       });
   };
