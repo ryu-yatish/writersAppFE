@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css'; // Reusing the CSS file
 
-const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://localhost:8080";
+const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://localhost:8080";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +62,6 @@ const Signup = () => {
       })
       .catch(error => {
         if (error.response) {
-          debugger
           setConfirmationError(error.response.data);
         } 
         console.error('Confirmation error:', error);

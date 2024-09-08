@@ -6,7 +6,7 @@ const DeleteChapter = ({ id,book, closePopup, setBook }) => {
   const handleDelete = async (id) => {
     try {
       const response = await deleteChapterById(id);
-      if (response.ok) {
+      if (response.status==204) {
         setBook((book) => ({
           ...book,
           chapters: book.chapters.filter((chapter) => chapter.id !== id),

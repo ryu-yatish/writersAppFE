@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom'; // If you're using react-router-dom for routing
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://localhost:8080"
+  baseURL: process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://localhost:8080",
 });
 
 // Request interceptor

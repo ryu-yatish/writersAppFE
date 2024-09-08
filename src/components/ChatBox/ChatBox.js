@@ -8,6 +8,7 @@ import "./ChatBox.css"; // Ensure this file exists and has styles
 import { analyzeBook } from "../services/embeddingService";
 import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
 import Tooltip from '@mui/material/Tooltip';
+import axiosInstance from '../axios'; // Import axiosInstance
 
 const ChatBox = ({ bookId, tooltipText }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,7 @@ const ChatBox = ({ bookId, tooltipText }) => {
   const [responses, setResponses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tooltipTextNew, setTooltipTextNew] = useState(tooltipText);
-  const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL: "https://localhost:8080";
+
   useEffect(() => {
     setTooltipTextNew(tooltipText);
   }, [tooltipText]);
@@ -43,26 +44,25 @@ const ChatBox = ({ bookId, tooltipText }) => {
   const handleSendMessage = async () => {
     setIsSending(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/Embeddings/askGpt/${bookId}`, {
-        method: 'POST',
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message }), // Wrap message in an object
+      // Use axiosInstance to make the POST request
+      const response = await axiosInstance.post(`/Embeddings/askGpt/${bookId}`, {
+        message, // Send message as an object property
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.text(); // Adjust this if your API returns JSON or another format
+      // Assuming the response data is text; adjust if it's JSON
+      const data = response.data;
       setResponses([...responses, { question: message, answer: data }]);
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
       setIsSending(false);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && !isSending && message) {
+      handleSendMessage();
     }
   };
 
@@ -95,6 +95,7 @@ const ChatBox = ({ bookId, tooltipText }) => {
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="Type your question..."
               disabled={isSending}
             />

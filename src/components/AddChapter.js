@@ -19,9 +19,9 @@ const AddChapter = ({ bookId, onAdd, onClose }) => {
     try {
       const response = addChapterApi(bookId,formData)
 
-      const newChapter = await response.json();
+      const newChapter = await response;
       onAdd(newChapter);
-
+      
       setFormData({
         title: "",
         content: "",

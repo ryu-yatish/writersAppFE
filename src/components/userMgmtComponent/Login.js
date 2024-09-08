@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../../App.css'; // Import the CSS file
 import './Login.css';
 
-const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://localhost:8080";
+const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://localhost:8080";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -60,6 +60,15 @@ const Login = () => {
       <p className="signup-link">
         Don't have an account? <a href="/signup">Sign up here</a>
       </p>
+
+      {/* Guest login credentials note */}
+      <div className="guest-login-note">
+        <strong>Guest Login Information:</strong><br />
+        To explore the application with guest access, use the following credentials:<br /><br />
+        <strong>Username:</strong> guestLogin<br />
+        <strong>Password:</strong> PASSword@123<br /><br />
+        <em>Note:</em> This account is public, and anyone can modify its contents. Please be mindful when using it.
+      </div>
     </div>
   );
 };
