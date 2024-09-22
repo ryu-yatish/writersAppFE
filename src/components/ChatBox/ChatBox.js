@@ -71,15 +71,6 @@ const ChatBox = ({ bookId, tooltipText }) => {
       <IconButton className="chatbox-toggle" onClick={handleToggleChat}>
         {isOpen ? <CloseIcon fontSize="large" /> : <ChatIcon fontSize="large" />}
       </IconButton>
-      <IconButton
-        className="chatbox-toggle"
-        onClick={handleAnalyze}
-        disabled={isLoading}
-      >
-        <Tooltip title={tooltipTextNew}>
-          {isLoading ? <CircularProgress size={35} /> : <LocationSearchingIcon fontSize="large" />}
-        </Tooltip>
-      </IconButton>
       {isOpen && (
         <div className="chatbox">
           <div className="chatbox-messages">

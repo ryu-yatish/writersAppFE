@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { addSchemas } from "./services/miscService";
-import "../App.css";
+import { addSchemas } from "../services/miscService";
+import "../../App.css";
 
 const AddSchema = ({ bookId, onAdd, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
-    icon: "",
     properties: [],
   });
 
@@ -28,17 +27,9 @@ const AddSchema = ({ bookId, onAdd, onClose }) => {
         ...prevFormData.properties,
         {
           propertyName: "",
-          type: "",
-          regex: "",
+          type: "String",
           required: false,
-          defaultValue: "",
-          description: "",
-          minLength: 0,
-          maxLength: 0,
-          minValue: 0,
-          maxValue: 0,
-          allowedValues: [],
-          customAttributes: {},
+          description: ""
         },
       ],
     }));
@@ -52,38 +43,24 @@ const AddSchema = ({ bookId, onAdd, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-
     const propertiesMap = formData.properties.reduce((acc, property) => {
       acc[property.propertyName] = {
-        type: property.type,
-        regex: property.regex,
         required: property.required,
-        defaultValue: property.defaultValue,
-        description: property.description,
-        minLength: property.minLength,
-        maxLength: property.maxLength,
-        minValue: property.minValue,
-        maxValue: property.maxValue,
-        allowedValues: property.allowedValues,
-        customAttributes: property.customAttributes,
+        description: property.description
       };
       return acc;
     }, {});
 
     const newSchema = {
       name: formData.name,
-      icon: formData.icon,
       propertiesMap: propertiesMap,
     };
 
     try {
       const response = await addSchemas(bookId,newSchema)
 
-      if (!response.ok) {
-        throw new Error("Failed to add schema");
-      }
 
-      const schemaData = await response.json();
+      const schemaData = response;
       onAdd(schemaData); // Use the onAdd prop to update the parent component's state
       onClose(); // Close the popup
     } catch (error) {
@@ -109,16 +86,6 @@ const AddSchema = ({ bookId, onAdd, onClose }) => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="form-group">
-            <label>Icon:</label>
-            <input
-              type="text"
-              name="icon"
-              required
-              value={formData.icon}
-              onChange={handleInputChange}
-            />
-          </div>
 
           <div className="form-group properties-group">
             <label>Properties:</label>
@@ -132,76 +99,20 @@ const AddSchema = ({ bookId, onAdd, onClose }) => {
                   value={property.propertyName}
                   onChange={(e) => handlePropertyChange(index, e)}
                 />
-                <label>Type:</label>
-                <input
-                  type="text"
-                  name="type"
-                  required
-                  value={property.type}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Regex:</label>
-                <input
-                  type="text"
-                  name="regex"
-                  value={property.regex}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Required:</label>
+                <label style={{ display: "inline-block", marginRight: "8px" }}>Required:</label>
                 <input
                   type="checkbox"
                   name="required"
                   checked={property.required}
                   onChange={(e) => handlePropertyChange(index, { target: { name: "required", value: e.target.checked } })}
                 />
-                <label>Default Value:</label>
-                <input
-                  type="text"
-                  name="defaultValue"
-                  value={property.defaultValue}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
+
                 <label>Description:</label>
                 <input
                   type="text"
                   name="description"
                   value={property.description}
                   onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Min Length:</label>
-                <input
-                  type="number"
-                  name="minLength"
-                  value={property.minLength}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Max Length:</label>
-                <input
-                  type="number"
-                  name="maxLength"
-                  value={property.maxLength}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Min Value:</label>
-                <input
-                  type="number"
-                  name="minValue"
-                  value={property.minValue}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Max Value:</label>
-                <input
-                  type="number"
-                  name="maxValue"
-                  value={property.maxValue}
-                  onChange={(e) => handlePropertyChange(index, e)}
-                />
-                <label>Allowed Values:</label>
-                <input
-                  type="text"
-                  name="allowedValues"
-                  value={property.allowedValues.join(", ")}
-                  onChange={(e) => handlePropertyChange(index, { target: { name: "allowedValues", value: e.target.value.split(", ") } })}
                 />
                 <button type="button" onClick={() => handleRemoveProperty(index)}>Remove Property</button>
               </div>

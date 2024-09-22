@@ -1,6 +1,6 @@
 div .chatbox-container {
     position: fixed;
-    bottom: 20px;
+    bottom: 8vh;
     right: 20px;
     display: flex;
     flex-direction: column;

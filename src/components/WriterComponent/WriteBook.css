@@ -17,18 +17,19 @@
 }
   
   .save-button {
-    display: block;
-    width: 100%;
-    max-width: 200px;
-    margin: 20px auto 0;
-    padding: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 40px;
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.7);
   }
   
   .save-button:hover {
@@ -49,9 +50,4 @@
     box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.2);
   }
   
-
-  
-  .save-button {
-    margin-right: 10px;
-  }
   

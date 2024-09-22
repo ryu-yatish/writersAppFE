@@ -3,12 +3,14 @@ import { DarkModeContext } from "../DarkModeContext";
 import JoditEditor from "jodit-react";
 import { fetchChapterById, saveChapterContent } from "../services/chapterService";
 import CircularProgress from '@mui/material/CircularProgress';
+import { analyzeBook } from "../services/embeddingService";
 
 import IconButton from '@mui/material/IconButton';
 import ChatBox from "../ChatBox/ChatBox";
 import { useParams } from "react-router-dom";
-
+import Sidebar from "../SidebarComponent/sidebar";
 import "./WriteBook.css";
+import Tooltip from '@mui/material/Tooltip';
 
 const WriteBook = () => {
   const editor = useRef(null);
@@ -19,11 +21,15 @@ const WriteBook = () => {
   const { darkMode } = useContext(DarkModeContext);
   const { bookId, chapterId } = useParams();
   const [lastAnalyzed, setLastAnalyzed] = useState("Analyze Book");
+  const [isLoading, setIsLoading] = useState(false);
+  const [tooltipTextNew, setTooltipTextNew] = useState("");
 
   const handleSave = async () => {
     try {
       console.log("Save successful:", title, content);
+      setIsLoading(true);
       await saveChapterContent(chapterId, { title, content });
+      await handleAnalyze()
     } catch (error) {
       console.error("Error saving content:", error);
     }
@@ -44,6 +50,19 @@ const WriteBook = () => {
       handleSave(); // Optionally save when pressing Enter
     }
   };
+  const handleAnalyze = async () => {
+    try {
+      await analyzeBook(bookId);
+      const date = new Date();
+      const formattedDate = date.toLocaleString();
+      setTooltipTextNew("Last analyzed: " + formattedDate);
+    } catch (error) {
+      console.error("Error analyzing book:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
 
   useEffect(() => {
@@ -52,10 +71,10 @@ const WriteBook = () => {
         const chapterData = await fetchChapterById(chapterId);
         setContent(chapterData.content);
         setTitle(chapterData.title);
-        if(chapterData?.lastAnalyzed){
+        if (chapterData?.lastAnalyzed) {
           const date = new Date(chapterData.lastAnalyzed);
           date.toLocaleString();
-          setLastAnalyzed("last analyzed  : \n" +  date)
+          setLastAnalyzed("last analyzed  : \n" + date)
         }
       } catch (error) {
         console.error("Error fetching book content:", error);
@@ -70,36 +89,50 @@ const WriteBook = () => {
   }, [darkMode]);
 
   return (
-    <div className="write-book-container">
-      {editTitle ? (
-        <input
-          type="text"
-          value={title}
-          onChange={handleTitleChange}
-          onBlur={handleTitleBlur}
-          onKeyPress={handleTitleKeyPress}
-          className="write-book-title-input"
-          autoFocus
-        />
-      ) : (
-        <h2 className="write-book-heading" onClick={() => setEditTitle(true)}>
-          {title}
-        </h2>
-      )}
-      <div className="editor-wrapper">
-        <JoditEditor
-          ref={editor}
-          value={content}
-          config={config}
-          onChange={(newContent) => setContent(newContent)}
-        />
-      </div>
-      <button className="save-button" onClick={handleSave}>Save</button>
+    <div className="page-container">
       <div>
-      
-      <ChatBox bookId={bookId} tooltipText={lastAnalyzed} />
+      <Sidebar bookId={bookId} />
       </div>
+      
+      <div className="main-content">
+        {editTitle ? (
+          <input
+            type="text"
+            value={title}
+            onChange={handleTitleChange}
+            onBlur={handleTitleBlur}
+            onKeyPress={handleTitleKeyPress}
+            className="write-book-title-input"
+            autoFocus
+          />
+        ) : (
+          <h2 className="write-book-heading" onClick={() => setEditTitle(true)}>
+            {title}
+          </h2>
+        )}
+        <div className="editor-wrapper">
+          <JoditEditor
+            ref={editor}
+            value={content}
+            config={config}
+            onChange={(newContent) => setContent(newContent)}
+          />
+        </div>
+       
+        <div>
+
+          <ChatBox bookId={bookId} tooltipText={lastAnalyzed} />
+          <button className="save-button" onClick={handleSave}>
+          <Tooltip title={tooltipTextNew}>
+          {isLoading ? <CircularProgress size={24} /> : <span>save</span>}
+          </Tooltip>
+          </button>
+        </div>
+      </div>
+
+      
     </div>
+    
   );
 };
 

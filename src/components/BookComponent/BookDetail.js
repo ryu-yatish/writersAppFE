@@ -4,18 +4,14 @@ import "../../App.css";
 import { useNavigate } from "react-router-dom";
 import { fetchBookById } from "../services/bookService";
 import AddChapter from "../AddChapter";
-import AddSchema from "../AddSchema";
 import DeleteChapter from "./DeleteChapter";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from '@mui/icons-material/Add';
-import { Suspense, lazy } from 'react';
-
+import Sidebar from "../SidebarComponent/sidebar";
 const BookDetail = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [showAddChapterPopup, setShowAddChapterPopup] = useState(false);
-  const [showAddSchemaPopup, setShowAddSchemaPopup] = useState(false);
   const [showDeleteChapterPopup, setShowDeleteChapterPopup] = useState(false);
   const [selectedChapterId, setSelectedChapterId] = useState(null);
   const navigate = useNavigate();
@@ -42,16 +38,13 @@ const BookDetail = () => {
     }));
   };
 
-  const handleAddSchema = (newSchema) => {
-    setBook((prevBook) => ({
-      ...prevBook,
-      dynamicDbSchemaList: [...prevBook.dynamicDbSchemaList, newSchema]
-    }));
-  };
+
   if (!book) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="page-container">
+      <Sidebar bookId={book.id} />
+      <div className="main-content">
       <div className="header">
         <h1>{book.bookName}</h1>
         <p><strong>Author:</strong> {book.author}</p>
@@ -99,13 +92,6 @@ const BookDetail = () => {
           onClose={() => setShowAddChapterPopup(false)}
         />
       )}
-      {showAddSchemaPopup && (
-        <AddSchema
-          bookId={id}
-          onAdd={handleAddSchema}
-          onClose={() => setShowAddSchemaPopup(false)}
-        />
-      )}
       {showDeleteChapterPopup && (
         <DeleteChapter
           id={selectedChapterId}
@@ -114,19 +100,7 @@ const BookDetail = () => {
           book={book}
         />
       )}
-      <div className="horizontal-icons">
-    <IconButton className="chatbox-toggle" onClick={() => setShowAddSchemaPopup(true)}>
-        <AddIcon fontSize="large" />
-      </IconButton>
-      {/* {book.dynamicDbSchemaList.map((dbSchema, index) => {
-        const image =dbSchema.icon;
-        return (
-            <div>
-              <img src={`data:image/svg+xml;utf8,${encodeURIComponent(image)}`} />
-            </div>
-        )
-      })} */}
-    </div>
+      </div>
     </div>
   );
 };

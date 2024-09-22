@@ -6,7 +6,7 @@ const DeleteBook = ({ id, books, closePopup, setBooks }) => {
   const handleDelete = async (id) => {
     try {
       const response = await deleteBookById(id);
-      if (response.ok) {
+      if (response.status===204) {
         setBooks(books.filter((book) => book.id !== id));
       } else {
         console.error(`Failed to delete book with id ${id}`);
