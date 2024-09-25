@@ -7,11 +7,11 @@ const Contact = () => {
     <Container maxWidth="sm" style={{ marginTop: '4rem', textAlign: 'center' }}>
       <Avatar
         src="https://i.imgur.com/kR0SG0b.jpeg" // Replace with your image URL
-        alt="Your Name"
+        alt="yatish"
         sx={{ width:320, height: 320, margin: '0 auto 1rem' }}
       />
       <Typography variant="h4" gutterBottom>
-        Your Name
+        Yatish Agrawal
       </Typography>
       <Typography variant="subtitle1" color="textSecondary" gutterBottom>
         Software Developer | Tech Enthusiast | Avid Reader
