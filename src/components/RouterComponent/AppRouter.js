@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import Home from '../Home';
+import MyBooks from '../MyBooks';
 import About from '../About';
 import Contact from '../Contact';
 import BookDetail from "../BookComponent/BookDetail";
@@ -41,7 +42,7 @@ const AppRouter = () => {
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </button>
           <div className="navbar-logo">
-            {/* Add your logo or brand here */}
+          <img href="%PUBLIC_URL%/logo.png" />
           </div>
           <div className="navbar-toggle" onClick={handleToggle}>
             &#9776;
@@ -51,6 +52,11 @@ const AppRouter = () => {
             <li>
               <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
             </li>
+            {isLoggedIn ? (
+            <li>
+              <NavLink to="/MyBooks" className={({ isActive }) => isActive ? "active" : ""}>MyBooks</NavLink>
+            </li>
+            ):""}
             <li>
               <NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}>About</NavLink>
             </li>
@@ -59,7 +65,7 @@ const AppRouter = () => {
             </li>
             {isLoggedIn ? (
               <li>
-                <NavLink to="/logout" onClick={handleLogout} className={({ isActive }) => isActive ? "active" : ""}>Logout</NavLink>
+                <a to="/logout" onClick={handleLogout} className={({ isActive }) => isActive ? "active" : ""}>Logout</a>
               </li>
             ) : (
               <li>
@@ -71,6 +77,7 @@ const AppRouter = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/mybooks" element={<MyBooks />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />

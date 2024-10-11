@@ -8,7 +8,7 @@
   --text-color: #000000;
   --button-hover-color: #357ABD;
   --button-cancel-hover-color: #a6000f;
-  
+  --background-image: url('./components/background.jpg');
 }
 body.dark-mode {
   /* Dark theme */
@@ -29,6 +29,10 @@ body {
   margin: 0;
   justify-content: center;
   align-items: center;
+  background-image: var(--background-image);
+  background-size: cover; 
+  background-blend-mode: color-burn;
+  background-position: center;
 }
 
 .header {

@@ -1,116 +1,89 @@
-import React, { useState, useEffect } from "react";
-import AddBook from "./AddBook";
-import UpdateBook from "./UpdateBook";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import "../App.css"
-import DeleteBook from "./DeleteBook";
-import { fetchBooks } from "./services/bookService";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import "./Home.css";
+import { ping } from "./services/miscService";
+
 const Home = () => {
-  const [books, setBooks] = useState([]);
-  const [showAddBookPopup, setShowAddBookPopup] = useState(false);
-  const [showUpdatePopup, setShowUpdatePopup] = useState(false);
-  const [showDeletePopup, setShowDeletePopup] = useState(false)
-  const [selectedBookId, setSelectedBookId] = useState(null);
-  
-  const [deleteID, setDeleteID] = useState(null)
-  const navigate = useNavigate();
-
   useEffect(() => {
-    handleFetchBooks();
-  }, []);
-
-  const handleFetchBooks = async () => {
+    handlePing();
+  }, []);  
+  const handlePing = async () => {
     try {
-      const books = await fetchBooks();
-      setBooks(books)
-      console.log("Books fetched successfully:", books);
-
+      await ping();
+      
     } catch (error) {
       console.error("Error occurred while fetching books:", error);
-
     }
   };
-
-  const handleAddBook = (newBook) => {
-    handleFetchBooks()
-    setShowAddBookPopup(false);
-  };
-
-  const handleDeletePopup = (id) => {
-    setShowDeletePopup(true)
-    setDeleteID(id)
-  }
-
-  const handleUpdatePopup = (id) => {
-    setShowUpdatePopup(true);
-    setSelectedBookId(id);
-  };
-
-  const closeDeletePopup = () => {
-    setShowDeletePopup(false)
-    setDeleteID(null)
-  }
-
-  const closeUpdatePopup = () => {
-    setShowUpdatePopup(false);
-    setSelectedBookId(null);
-  };
-
+  
   return (
     <>
-    <div className="header">
-      <h1>List of Books</h1>
-      <button className="add-book-btn" onClick={() => setShowAddBookPopup(true)}>Add Book</button>
-    </div>
-    
-    <table className="book-table">
-      <thead>
-        <tr>
-          <th>Book Title</th>
-          <th>Author</th>
-          <th>Chapter Count</th>
-          <th>DELETE</th>
-          <th>UPDATE</th>
-        </tr>
-      </thead>
-      <tbody>
-        {books?.map((book) => (
-          <tr key={book.id} onClick={(e) => {
-            if (!e.target.closest('.ignore-click')) {
-              navigate(`/book/${book.id}`);
-            }
-          }}>
-            <td>{book.bookName}</td>
-            <td>{book.author}</td>
-            <td>{book.chapterCount}</td>
-            <td>
-              <IconButton className="ignore-click" onClick={() => handleDeletePopup(book.id)} aria-label="delete" color="error" size="large">
-                <DeleteIcon />
-              </IconButton>
-            </td>
-            <td>
-              <button  className="update-btn  ignore-click" onClick={() => handleUpdatePopup(book.id)}>
-                Update
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    {showAddBookPopup && (
-      <AddBook
-        onAdd={handleAddBook}
-        onClose={() => setShowAddBookPopup(false)}
-      />
-    )}
-    {showUpdatePopup && (
-      <UpdateBook id={selectedBookId} handleClose={closeUpdatePopup} />
-    )}
-    {showDeletePopup && 
-    (<DeleteBook id={deleteID} books={books} setBooks={setBooks} closePopup={closeDeletePopup}/>)}
-  </>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Welcome to WriteFlow</h1>
+          <p>Unleash your creativity, with everything you need at your fingertips turn your words into magic.</p>
+          <button className="cta-button" onClick={()=>{window.location.href = '/login'}}>Join the Community</button>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="about">
+        <h2>Why WriteFlow?</h2>
+        <p>WriteFlow is the ultimate platform for writers to collect your thoughts, organize them, and Just write. Whether you're a fiction, history, or even smut, we provide the tools you need to excel.</p>
+      </section>
+
+      {/* Features Section */}
+      <section className="features">
+        <h2>Key Features</h2>
+        <div className="features-grid">
+          <div className="feature-item">
+            <h3>Fully customizable database system</h3>
+            <p>Keep a track of all your story components on the go</p>
+          </div>
+          <div className="feature-item">
+            <h3>powerful writing tools</h3>
+            <p>A full fledged text editerin a style perfect for distraction free writing</p>
+          </div>
+          <div className="feature-item">
+            <h3>Ask GPT</h3>
+            <p>stuck somewhere? gpt has access to your entire book the moment you save anything, so ask away.</p>
+          </div>
+          <div className="feature-item">
+            <h3>(upcoming)Idea board</h3>
+            <p>A seemless ideation board, fill it with pictures, notes, make it your own murder board with pins and threads</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="testimonials">
+        <h2>What Writers Say(this is fake for now)</h2>
+        <div className="testimonials-grid">
+          <div className="testimonial-item">
+            <p>"WriteFlow transformed the way I collaborate with other authors. It's a must for any writer!"</p>
+            <span>- Alex J.</span>
+          </div>
+          <div className="testimonial-item">
+            <p>"I found my voice here, and the challenges helped me finish my first novel!"</p>
+            <span>- Sarah M.</span>
+          </div>
+          <div className="testimonial-item">
+            <p>"The community here is incredible. There's so much support and inspiration."</p>
+            <span>- Daniel K.</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Section */}
+      <footer className="footer">
+        <p>&copy; 2024 WriteFlow | Where words meet inspiration</p>
+        <div className="footer-links">
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </footer>
+    </>
   );
 };
 

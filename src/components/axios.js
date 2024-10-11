@@ -27,6 +27,7 @@ axiosInstance.interceptors.response.use(
   error => {
     if (error.response && (error.response.status === 401 || error.response.status === 405)) {
       localStorage.removeItem('authToken');
+      if(error.config.url !="/hello")
       window.location.href = '/login'; // or use useHistory() to push to the login page
     }
     return Promise.reject(error);

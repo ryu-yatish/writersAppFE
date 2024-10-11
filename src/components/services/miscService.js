@@ -1,5 +1,16 @@
 import axiosInstance from '../axios';
 
+export const ping = async () => {
+  try {
+    const response = await axiosInstance.get(`/hello`);
+    return response.status;
+  } catch (error) {
+    console.error("initial ping ", error);
+    throw error;
+  }
+};
+
+
 export const addSchemas = async (bookId, newSchema) => {
   try {
     const response = await axiosInstance.post(`/DDS/db-schemas/${bookId}`, newSchema, {

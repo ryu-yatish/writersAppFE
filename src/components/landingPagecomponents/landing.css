@@ -1,0 +1,14 @@
+
+  section {
+    padding: 100px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #agenda { background-color: #e3fcef; }
+  #sitemap-overview { background-color: #f5faff; }
+  #sitemap-activity { background-color: #ebe5fc; }
+  #next-steps { background-color: #fff4e5; }
+  
