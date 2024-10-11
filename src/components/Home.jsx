@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { ping } from "./services/miscService";
 
 const Home = () => {
+  const token = localStorage.getItem('authToken');
   useEffect(() => {
     handlePing();
   }, []);  
   const handlePing = async () => {
     try {
       await ping();
-      
     } catch (error) {
       console.error("Error occurred while fetching books:", error);
     }
@@ -22,7 +22,8 @@ const Home = () => {
         <div className="hero-content">
           <h1>Welcome to WriteFlow</h1>
           <p>Unleash your creativity, with everything you need at your fingertips turn your words into magic.</p>
-          <button className="cta-button" onClick={()=>{window.location.href = '/login'}}>Join the Community</button>
+          {token?"":<button className="cta-button" onClick={()=>{window.location.href = '/login'}}>Join the Community</button>}
+          
         </div>
       </section>
 

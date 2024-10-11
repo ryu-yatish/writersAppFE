@@ -17,7 +17,7 @@ const Login = () => {
       .then(response => {
         const token = response.data.accessToken;
         localStorage.setItem('authToken', token); 
-        window.location.href = '/';
+        window.location.href = '/mybooks';
       })
       .catch(error => {
         if (error.response) {
