@@ -17,40 +17,80 @@ const Contact = () => {
         Software Developer | Tech Enthusiast | Avid Reader
       </Typography>
       <Box my={4}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Contact Information
+  <Card>
+    <CardContent>
+      <Typography variant="h6" gutterBottom>
+        Contact Information
+      </Typography>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item container alignItems="center" spacing={1}>
+          <Grid item>
+            <Email color="primary" />
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="body1"
+              component="a"
+              href="mailto:f20180660P@alumni.bits-pilani.ac.in"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              f20180660P@alumni.bits-pilani.ac.in
             </Typography>
-            <Grid container spacing={2} justifyContent="center">
-              <Grid item>
-                <Email color="primary" />
-                <Typography variant="body1" component="a" href="f20180660P@alumni.bits-pilani.ac.in" style={{ textDecoration: 'none', color: 'inherit' }}>
-                f20180660P@alumni.bits-pilani.ac.in
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Phone color="primary" />
-                <Typography variant="body1" component="a" href="tel:+917014348617" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  +91 7014348617
-                </Typography>
-              </Grid>
-              <Grid item>
-                <LinkedIn color="primary" />
-                <Typography variant="body1" component="a" href="https://www.linkedin.com/in/yatish-agrawal-b93700178/" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  LinkedIn
-                </Typography>
-              </Grid>
-              <Grid item>
-                <GitHub color="primary" />
-                <Typography variant="body1" component="a" href="https://github.com/ryu-yatish?tab=repositories" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  GitHub
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Box>
+          </Grid>
+        </Grid>
+        <Grid item container alignItems="center" spacing={1}>
+          <Grid item>
+            <Phone color="primary" />
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="body1"
+              component="a"
+              href="tel:+917014348617"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              +91 7014348617
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container alignItems="center" spacing={1}>
+          <Grid item>
+            <LinkedIn color="primary" />
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="body1"
+              component="a"
+              href="https://www.linkedin.com/in/yatish-agrawal-b93700178/"
+              target="_blank"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              LinkedIn
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container alignItems="center" spacing={1}>
+          <Grid item>
+            <GitHub color="primary" />
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="body1"
+              component="a"
+              href="https://github.com/ryu-yatish?tab=repositories"
+              target="_blank"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              GitHub
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </CardContent>
+  </Card>
+</Box>
+
+
     </Container>
   );
 };
