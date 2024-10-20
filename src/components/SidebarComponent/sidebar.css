@@ -30,6 +30,9 @@
     text-align: center;
     transition: background-color 0.3s; /* Smooth transition on hover */
   }
+  .custom-icon-button {
+    color: var(--primary-color); /* Or any other color */
+  }
   .db-schema-item {
     padding: 8px;
     background-color: var(--background-color); /* Background color for schema items */

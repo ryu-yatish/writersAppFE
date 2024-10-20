@@ -9,6 +9,7 @@
   --button-hover-color: #357ABD;
   --button-cancel-hover-color: #a6000f;
   --background-image: url('./components/background.jpg');
+  --background-bled-var:normal;
 }
 body.dark-mode {
   /* Dark theme */
@@ -20,6 +21,7 @@ body.dark-mode {
   --text-color: #ffffff;
   --button-hover-color: #1c7cc1;
   --button-cancel-hover-color: #d32f2f;
+  --background-blend-var: soft-light;
 }
 
 body {
@@ -31,13 +33,13 @@ body {
   align-items: center;
   background-image: var(--background-image);
   background-size: cover; 
-  background-blend-mode: color-burn;
+  background-blend-mode: var(--background-blend-var);
   background-position: center;
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   padding: 20px 20px;
@@ -80,6 +82,7 @@ body {
   box-shadow: -1px 1px 20px 5px var(--background-color-shadow);
   border-radius: 8px;
   overflow: hidden;
+  background-color: var(--background-color);
 }
 
 .book-table th,
@@ -218,4 +221,8 @@ body {
   height: 100vh; /* Full height for independent scrolling */
   overflow-y: auto; /* Enable vertical scrolling within the main content */
   background: var(--background-color);
+}
+
+.profile-image {
+  box-shadow: 0px 0px 14px 15px #0000ff38;
 }

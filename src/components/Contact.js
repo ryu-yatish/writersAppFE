@@ -9,6 +9,7 @@ const Contact = () => {
         src="https://i.imgur.com/kR0SG0b.jpeg" // Replace with your image URL
         alt="yatish"
         sx={{ width:320, height: 320, margin: '0 auto 1rem' }}
+        className='profile-image'
       />
       <Typography variant="h4" gutterBottom>
         Yatish Agrawal

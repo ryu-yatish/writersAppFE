@@ -57,9 +57,9 @@ const AppRouter = () => {
               <NavLink to="/MyBooks" className={({ isActive }) => isActive ? "active" : ""}>MyBooks</NavLink>
             </li>
             ):""}
-            <li>
+            {/* <li>
               <NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}>About</NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>Contact</NavLink>
             </li>

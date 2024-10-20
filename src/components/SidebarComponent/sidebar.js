@@ -199,9 +199,10 @@ const Sidebar = ({ bookId }) => {
 
         {!selectedSchema && (
           <>
-            <IconButton onClick={() => setShowAddSchemaPopup(true)}>
-              <AddIcon /> New Database
-            </IconButton>
+            <IconButton onClick={() => setShowAddSchemaPopup(true)} style={{ color: "#257ce0" }}>
+            <AddIcon /> New Database
+          </IconButton>
+
 
             {book && book.dynamicDbSchemaList && book.dynamicDbSchemaList.map((dbSchema, index) => (
               <div key={index} className="db-schema-item" onClick={() => handleSchemaClick(dbSchema)}>

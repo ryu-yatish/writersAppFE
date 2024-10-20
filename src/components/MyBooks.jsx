@@ -61,7 +61,6 @@ const MyBooks = () => {
   return (
     <>
     <div className="header">
-      <h1>List of Books</h1>
       <button className="add-book-btn" onClick={() => setShowAddBookPopup(true)}>Add Book</button>
     </div>
     
