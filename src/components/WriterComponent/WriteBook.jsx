@@ -88,6 +88,17 @@ const WriteBook = () => {
     setConfig(darkMode ? { theme: 'dark' } : {});
   }, [darkMode]);
 
+  useEffect(() => {
+    const autoSaveInterval = setInterval(() => {
+      if (content || title) {  // Only save if there's content or title to save
+        handleSave();
+      }
+    }, 5 * 60 * 1000);  // 5 minutes in milliseconds
+
+    // Cleanup function to clear the interval when component unmounts
+    return () => clearInterval(autoSaveInterval);
+  }, [content, title]);  // Re-create interval when content or title changes
+
   return (
     <div className="page-container">
       <div>
